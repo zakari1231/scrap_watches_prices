@@ -70,6 +70,7 @@ def scrape_data():
 # call the scrape_data() function and get the data and the driver
 data, driver = scrape_data()
 
+#TODO fix the exit pb in chrome driver
 
 # manually close the driver
 input("Press any key to exit")
