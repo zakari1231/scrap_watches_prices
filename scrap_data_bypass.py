@@ -65,11 +65,12 @@ def scrape_data():
 
     # extract the data you need from the JSON object
     product_name = data_json['name']
+    product_price_history = data_json['prices']
     # description = data_json['data']['product']['description']
-    return product_name, driver
+    return product_name,product_price_history, driver
 
 # call the scrape_data() function and get the data and the driver
-data, driver = scrape_data()
+data, product_price_history, driver = scrape_data()
 
 def convert_to_date(str):
     new_date = datetime.strptime(str, '%m/%ya')
@@ -84,3 +85,4 @@ driver.quit()
 
 # print the data
 print(data)
+print(product_price_history)
