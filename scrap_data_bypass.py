@@ -14,6 +14,7 @@
 
 import undetected_chromedriver as uc 
 from selenium.webdriver.common.by import By
+from datetime import datetime
 import time
 import json
 # driver = uc.Chrome() 
@@ -69,6 +70,11 @@ def scrape_data():
 
 # call the scrape_data() function and get the data and the driver
 data, driver = scrape_data()
+
+def convert_to_date(str):
+    new_date = datetime.strptime(str, '%m/%ya')
+    return new_date
+
 
 #TODO fix the exit pb in chrome driver
 
