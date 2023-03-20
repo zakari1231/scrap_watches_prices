@@ -69,6 +69,7 @@ def scrape_data():
     # extract the data you need from the JSON object
     product_name = data_json['name']
     product_price_history = data_json['prices']
+    product_related = data_json['related']
     # description = data_json['data']['product']['description']
     return product_name,product_price_history, driver
 
