@@ -72,8 +72,20 @@ def scrape_data():
 # call the scrape_data() function and get the data and the driver
 data, product_price_history, driver = scrape_data()
 
+# # update the keys in the dictionary in place
+# for key in product_price_history.keys():
+#     date_obj = datetime.strptime(str(key), '%b %Y')
+#     # new_key = date_obj.strftime('%m-%Y')
+#     product_price_history[date_obj] = product_price_history.pop(key)
 
+# create a new dictionary to store the updated keys
+new_data = {}
 
+# loop through the original dictionary and update the keys
+for k, v in product_price_history.items():
+    date_obj = datetime.strptime(k, '%b %Y')
+    new_key = date_obj.strftime('%Y-%m')
+    new_data[new_key] = v
 
 #TODO fix the exit pb in chrome driver
 
@@ -83,4 +95,7 @@ driver.quit()
 
 # print the data
 print(data)
-print(product_price_history)
+print(new_data)
+
+# for key in product_price_history.keys():
+#     print(key, type(key))
