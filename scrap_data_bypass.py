@@ -72,9 +72,7 @@ def scrape_data():
 # call the scrape_data() function and get the data and the driver
 data, product_price_history, driver = scrape_data()
 
-def convert_to_date(str):
-    new_date = datetime.strptime(str, '%m/%ya')
-    return new_date
+
 
 
 #TODO fix the exit pb in chrome driver
