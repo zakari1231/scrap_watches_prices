@@ -12,7 +12,9 @@
 # print(scraped_data.text)
 ##################################################
 
+# import undetected_chromedriver as uc
 import undetected_chromedriver as uc 
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from datetime import datetime
 import time
@@ -46,7 +48,8 @@ import json
 
 def scrape_data():
     # code to initialize the driver and load the page
-    driver = uc.Chrome() 
+    options = Options()
+    driver = uc.Chrome(options=options) 
     driver.get('https://api.watchanalytics.io/v1/products/rolex-daytona-116500ln/')
 
     # wait for the data to load
