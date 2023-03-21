@@ -16,6 +16,7 @@
 import undetected_chromedriver as uc 
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+import pandas as pd
 from datetime import datetime
 import time
 import json
@@ -46,11 +47,11 @@ import json
 # print (scrape_data())
 
 
-def scrape_data():
+def scrape_data(url):
     # code to initialize the driver and load the page
     options = Options()
     driver = uc.Chrome(options=options) 
-    driver.get('https://api.watchanalytics.io/v1/products/rolex-daytona-116500ln/')
+    driver.get(url)
 
     # wait for the data to load
     time.sleep(10)
@@ -72,34 +73,34 @@ def scrape_data():
     product_related = data_json['related']
     # description = data_json['data']['product']['description']
 
-    # create an empty dictionary to store the product information
-    related_dict = {}
+    # convert the product_price dictionary to a list of dictionaries
+    product_price_list = [{'date': k, 'price': v} for k, v in product_price_history.items()]
 
-    # loop through the products and add their information to the dictionary
+    # create a new dictionary to store the updated keys
+    product_price = {}
+
+    # loop through the original dictionary and update the keys
+    for k, v in product_price_history.items():
+        date_obj = datetime.strptime(k, '%b %Y')
+        new_key = date_obj.strftime('%Y-%m')
+        product_price[new_key] = v
+
+     # create a list of dictionaries to store the product information
+    related_dict_list = []
+
+    # loop through the products and add their information to the list of dictionaries
     for i, product in enumerate(product_related):
         slug = product['slug']
         name = product['name']
         price = product['price']
-        related_dict[i+1] = [slug, name, price]
-    return product_name, product_price_history, related_dict, driver
+        related_dict_list.append({'id': i+1, 'slug': slug, 'name': name, 'price': price})
+    
+    return product_name, product_price_list, related_dict_list, driver
 
+
+url = 'https://api.watchanalytics.io/v1/products/rolex-daytona-116500ln/'
 # call the scrape_data() function and get the data and the driver
-data, product_price_history, related_dict, driver = scrape_data()
-
-# # update the keys in the dictionary in place
-# for key in product_price_history.keys():
-#     date_obj = datetime.strptime(str(key), '%b %Y')
-#     # new_key = date_obj.strftime('%m-%Y')
-#     product_price_history[date_obj] = product_price_history.pop(key)
-
-# create a new dictionary to store the updated keys
-new_data = {}
-
-# loop through the original dictionary and update the keys
-for k, v in product_price_history.items():
-    date_obj = datetime.strptime(k, '%b %Y')
-    new_key = date_obj.strftime('%Y-%m')
-    new_data[new_key] = v
+name, product_price_list, related_dict, driver = scrape_data(url)
 
 #TODO fix the exit pb in chrome driver
 
@@ -108,8 +109,12 @@ input("Press any key to exit")
 driver.quit()
 
 # print the data
-print(data)
-print(new_data)
+print(name)
+print(product_price_list)
 print(related_dict)
+df = pd.DataFrame(product_price_list)
+df.to_csv(f'{name}_prices_history.csv', index=False)
+df2 = pd.DataFrame(related_dict)
+df2.to_csv(f'{name}_related_watches.csv', index=False)
 # for key in product_price_history.keys():
 #     print(key, type(key))
