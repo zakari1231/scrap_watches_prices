@@ -71,10 +71,20 @@ def scrape_data():
     product_price_history = data_json['prices']
     product_related = data_json['related']
     # description = data_json['data']['product']['description']
-    return product_name,product_price_history, driver
+
+    # create an empty dictionary to store the product information
+    related_dict = {}
+
+    # loop through the products and add their information to the dictionary
+    for i, product in enumerate(product_related):
+        slug = product['slug']
+        name = product['name']
+        price = product['price']
+        related_dict[i+1] = [slug, name, price]
+    return product_name, product_price_history, related_dict, driver
 
 # call the scrape_data() function and get the data and the driver
-data, product_price_history, driver = scrape_data()
+data, product_price_history, related_dict, driver = scrape_data()
 
 # # update the keys in the dictionary in place
 # for key in product_price_history.keys():
@@ -100,6 +110,6 @@ driver.quit()
 # print the data
 print(data)
 print(new_data)
-
+print(related_dict)
 # for key in product_price_history.keys():
 #     print(key, type(key))
