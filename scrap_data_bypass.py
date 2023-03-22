@@ -22,11 +22,14 @@ import time
 import json
 
 
-def scrape_data(url):
-    # code to initialize the driver and load the page
-    options = Options()
-    driver = uc.Chrome(options=options) 
-    driver.get(url)
+def scrape_data(url, driver = None):
+    if not driver:
+        # code to initialize the driver and load the page
+        options = Options()
+        driver = uc.Chrome(options=options) 
+        driver.get(url)
+    else:
+        driver.get(url)
 
     # wait for the data to load
     time.sleep(10)
