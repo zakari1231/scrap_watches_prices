@@ -121,6 +121,8 @@ print(name)
 print(product_price_list)
 print(related_dict)
 print(from_slug_to_url(related_dict))
+
+# save the result into csv file 
 # df = pd.DataFrame(product_price_list)
 # df.to_csv(f'{name}_prices_history.csv', index=False)
 # df2 = pd.DataFrame(related_dict)
