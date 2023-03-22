@@ -116,5 +116,3 @@ df = pd.DataFrame(product_price_list)
 df.to_csv(f'{name}_prices_history.csv', index=False)
 df2 = pd.DataFrame(related_dict)
 df2.to_csv(f'{name}_related_watches.csv', index=False)
-# for key in product_price_history.keys():
-#     print(key, type(key))
