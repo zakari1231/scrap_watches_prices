@@ -20,31 +20,6 @@ import pandas as pd
 from datetime import datetime
 import time
 import json
-# driver = uc.Chrome() 
-# driver.get('https://api.watchanalytics.io/v1/products/rolex-daytona-116500ln/')
-
-# input("Press any key to exit")
-
-# def scrape_data():
-#     # code to initialize the driver and load the page
-#     driver = uc.Chrome() 
-#     driver.get('https://api.watchanalytics.io/v1/products/rolex-daytona-116500ln/')
-
-#     # wait for the data to load
-#     time.sleep(10)
-
-#     # get the element with the pre tag
-#     pre_element = driver.find_element(By.TAG_NAME, "pre")
-
-#     # extract the text inside the pre tag
-#     data_text = pre_element.text
-
-#     # close the driver
-#     driver.quit()
-
-#     return data_text
-
-# print (scrape_data())
 
 
 def scrape_data(url):
@@ -62,8 +37,6 @@ def scrape_data(url):
     # extract the text inside the pre tag
     data_text = pre_element.text
 
-    # return the data and the driver
-    # return data_text, driver
     # convert the text into a JSON object
     data_json = json.loads(data_text)
 
@@ -71,7 +44,6 @@ def scrape_data(url):
     product_name = data_json['name']
     product_price_history = data_json['prices']
     product_related = data_json['related']
-    # description = data_json['data']['product']['description']
 
     # convert the product_price dictionary to a list of dictionaries
     product_price_list = [{'date': k, 'price': v} for k, v in product_price_history.items()]
