@@ -98,6 +98,14 @@ def scrape_data(url):
     return product_name, product_price_list, related_dict_list, driver
 
 
+def from_slug_to_url(related_list):
+    url_list = []
+    for item in related_list:
+        slug = item['slug']
+        new_item = f'https://api.watchanalytics.io/v1/products/{slug}/'
+        url_list.append(new_item)
+    return url_list
+
 url = 'https://api.watchanalytics.io/v1/products/rolex-daytona-116500ln/'
 # call the scrape_data() function and get the data and the driver
 name, product_price_list, related_dict, driver = scrape_data(url)
@@ -112,7 +120,8 @@ driver.quit()
 print(name)
 print(product_price_list)
 print(related_dict)
-df = pd.DataFrame(product_price_list)
-df.to_csv(f'{name}_prices_history.csv', index=False)
-df2 = pd.DataFrame(related_dict)
-df2.to_csv(f'{name}_related_watches.csv', index=False)
+print(from_slug_to_url(related_dict))
+# df = pd.DataFrame(product_price_list)
+# df.to_csv(f'{name}_prices_history.csv', index=False)
+# df2 = pd.DataFrame(related_dict)
+# df2.to_csv(f'{name}_related_watches.csv', index=False)
