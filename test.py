@@ -1,16 +1,10 @@
-1['https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-25940sk-oo-d002ca-02-a/',
-3  'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-navy-26170st-oo-d305cr-01/',
-4    'https://api.watchanalytics.io/v1/products/rolex-daytona-16520/',
-5      'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-panda-26170st-oo-d101cr-02/',
-6        'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-safari-26020st-oo-d091cr-01/',
-7          'https://api.watchanalytics.io/v1/products/rolex-daytona-116520/',
-2            'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-26170st-oo-1000st-01/',
-8              'https://api.watchanalytics.io/v1/products/rolex-yacht-master-ii-116680/',
-9                'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-diver-15710st-oo-a010ca-01/',
-                  'https://api.watchanalytics.io/v1/products/rolex-daytona-16520-1/',
-                    'https://api.watchanalytics.io/v1/products/rolex-daytona-116520-1/',
-10                      'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-15400st-oo-1220st-02/',
-11                        'https://api.watchanalytics.io/v1/products/rolex-daytona-116515ln-2/',
-                          'https://api.watchanalytics.io/v1/products/rolex-daytona-116500ln-1/',
-                            'https://api.watchanalytics.io/v1/products/rolex-daytona-116518ln-2/',
-                              'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-selfwinding-chronograph-26240st-oo-1320st-03/']
+# url = 'https://api.watchanalytics.io/v1/products/rolex-daytona-116500ln/'
+
+def url_to_slug(url):
+    new_str = url.split('/')
+    return new_str[-2]
+
+urls = ['https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-25940sk-oo-d002ca-02-a/', 'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-navy-26170st-oo-d305cr-01/', 'https://api.watchanalytics.io/v1/products/rolex-daytona-16520/', 'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-panda-26170st-oo-d101cr-02/', 'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-safari-26020st-oo-d091cr-01/', 'https://api.watchanalytics.io/v1/products/rolex-daytona-116520/', 'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-26170st-oo-1000st-01/', 'https://api.watchanalytics.io/v1/products/rolex-yacht-master-ii-116680/', 'https://api.watchanalytics.io/v1/products/audemars-piguet-royal-oak-offshore-diver-15710st-oo-a010ca-01/']
+
+for url in urls:
+    print(url_to_slug(url))

@@ -21,6 +21,9 @@ from datetime import datetime
 import time
 import json
 
+def url_to_slug(url):
+    new_str = url.split('/')
+    return new_str[-2]
 
 def scrape_data(url, driver = None):
     if not driver:
@@ -49,6 +52,8 @@ def scrape_data(url, driver = None):
     product_price_history = data_json['prices']
     product_related = data_json['related']
 
+    slug_url = url_to_slug(url)
+
     # convert the product_price dictionary to a list of dictionaries
     product_price_list = [{'date': k, 'price': v} for k, v in product_price_history.items()]
 
@@ -73,9 +78,9 @@ def scrape_data(url, driver = None):
 
     # save the result into csv file 
     df = pd.DataFrame(product_price_list)
-    df.to_csv(f'{product_name}_{product_ref}_prices_history.csv', index=False)
+    df.to_csv(f'{slug_url}_prices_history.csv', index=False)
     df2 = pd.DataFrame(related_dict_list)
-    df2.to_csv(f'{product_name}{product_ref}_related_watches.csv', index=False)
+    df2.to_csv(f'{slug_url}_related_watches.csv', index=False)
     
     return product_name, product_price_list, related_dict_list, driver
 
