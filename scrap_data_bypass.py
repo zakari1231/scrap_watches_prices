@@ -45,6 +45,7 @@ def scrape_data(url, driver = None):
 
     # extract the data you need from the JSON object
     product_name = data_json['name']
+    product_ref = data_json['ref']
     product_price_history = data_json['prices']
     product_related = data_json['related']
 
@@ -69,6 +70,12 @@ def scrape_data(url, driver = None):
         name = product['name']
         price = product['price']
         related_dict_list.append({'id': i+1, 'slug': slug, 'name': name, 'price': price})
+
+    # save the result into csv file 
+    df = pd.DataFrame(product_price_list)
+    df.to_csv(f'{product_name}_{product_ref}_prices_history.csv', index=False)
+    df2 = pd.DataFrame(related_dict_list)
+    df2.to_csv(f'{product_name}{product_ref}_related_watches.csv', index=False)
     
     return product_name, product_price_list, related_dict_list, driver
 
@@ -85,6 +92,11 @@ url = 'https://api.watchanalytics.io/v1/products/rolex-daytona-116500ln/'
 # call the scrape_data() function and get the data and the driver
 name, product_price_list, related_dict, driver = scrape_data(url)
 
+list_urls = from_slug_to_url(related_dict)
+# loop to save data from url and related urls
+for i in list_urls:
+    scrape_data(i, driver)
+
 #TODO fix the exit pb in chrome driver
 
 # manually close the driver
@@ -92,10 +104,10 @@ input("Press any key to exit")
 driver.quit()
 
 # print the data
-print(name)
-print(product_price_list)
-print(related_dict)
-print(from_slug_to_url(related_dict))
+# print(name)
+# print(product_price_list)
+# print(related_dict)
+# print(from_slug_to_url(related_dict))
 
 # save the result into csv file 
 # df = pd.DataFrame(product_price_list)
