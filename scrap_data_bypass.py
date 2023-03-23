@@ -109,7 +109,7 @@ url = 'https://api.watchanalytics.io/v1/products/rolex-daytona-116500ln/'
 name, product_price_list, related_dict, driver = scrape_data(url)
 
 depth = 2  # set the maximum depth to scrape related watches
-name, product_price_list, related_dict, driver = scrape_data(url, depth=depth)
+name, product_price_list, related_dict, driver = scrape_data(url, driver, depth=depth)
 
 # list_urls = from_slug_to_url(related_dict)
 # # loop to save data from url and related urls
