@@ -25,7 +25,7 @@ def url_to_slug(url):
     new_str = url.split('/')
     return new_str[-2]
 
-def scrape_data(url, driver = None):
+def scrape_data(url, driver = None, depth = 0):
     if not driver:
         # code to initialize the driver and load the page
         options = Options()
@@ -81,6 +81,9 @@ def scrape_data(url, driver = None):
     df.to_csv(f'{slug_url}_prices_history.csv', index=False)
     df2 = pd.DataFrame(related_dict_list)
     df2.to_csv(f'{slug_url}_related_watches.csv', index=False)
+
+    if depth > 0:
+        scrape_related_watches(related_dict_list, driver, depth-1)
     
     return product_name, product_price_list, related_dict_list, driver
 
@@ -93,14 +96,25 @@ def from_slug_to_url(related_list):
         url_list.append(new_item)
     return url_list
 
+
+
+def scrape_related_watches(related_list, driver, depth):
+    urls = from_slug_to_url(related_list)
+    for url in urls:
+        scrape_data(url, driver, depth)
+
+
 url = 'https://api.watchanalytics.io/v1/products/rolex-daytona-116500ln/'
 # call the scrape_data() function and get the data and the driver
 name, product_price_list, related_dict, driver = scrape_data(url)
 
-list_urls = from_slug_to_url(related_dict)
-# loop to save data from url and related urls
-for i in list_urls:
-    scrape_data(i, driver)
+depth = 2  # set the maximum depth to scrape related watches
+name, product_price_list, related_dict, driver = scrape_data(url, depth=depth)
+
+# list_urls = from_slug_to_url(related_dict)
+# # loop to save data from url and related urls
+# for i in list_urls:
+#     scrape_data(i, driver)
 
 #TODO fix the exit pb in chrome driver
 
